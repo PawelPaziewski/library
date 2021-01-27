@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" rel="stylesheet">
+    <title>Moje wypożyczenia</title>
+</head>
+<body>
+<!--header-->
+<div th:replace="fragments::header"></div>
+<!--messages-->
+<div th:replace="fragments::messages"></div>
+<!--body-->
+<div class="container">
+    <div class="alert alert-primary" role="alert">
+        Wypożyczenia aktualne
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Data wypożyczenia</th>
+            <th scope="col">ISBN</th>
+            <th scope="col">Tytuł</th>
+            <th scope="col">Autor</th>
+            <th scope="col">Wydawnictwo</th>
+            <th scope="col">Liczba stron</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="borrow:${borrows}" th:object="${borrow}">
+            <td th:text="*{borrowDate}"/>
+            <td th:text="*{book.isbn}"/>
+            <td th:text="*{book.title}"/>
+            <td th:text="*{book.author}"/>
+            <td th:text="*{book.publishingHouse}"/>
+            <td th:text="*{book.numberOfPages}"/>
+            <td>
+                <form th:action="@{/return}">
+                    <button class="btn btn-primary" th:name="button" th:value="*{id}" type="submit">Zwróc</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-primary" role="alert">
+        Wypożyczenia archiwalne
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Data wypożyczenia</th>
+            <th scope="col">Data zwrotu</th>
+            <th scope="col">ISBN</th>
+            <th scope="col">Tytuł</th>
+            <th scope="col">Autor</th>
+            <th scope="col">Wydawnictwo</th>
+            <th scope="col">Liczba stron</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="borrow:${borrowsArchival}" th:object="${borrow}">
+            <td th:text="*{borrowDate}"/>
+            <td th:text="*{returnDate}"/>
+            <td th:text="*{book.isbn}"/>
+            <td th:text="*{book.title}"/>
+            <td th:text="*{book.author}"/>
+            <td th:text="*{book.publishingHouse}"/>
+            <td th:text="*{book.numberOfPages}"/>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
